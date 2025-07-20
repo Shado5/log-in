@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>User List</title>
+</head>
+
+<body>
+    <h1>Registered Users</h1>
+    <ul id="userList"></ul>
+
+    <script>
+        fetch('/users')
+            .then(res => res.json())
+            .then(data => {
+                console.log('Users API response:', data); // Debug log
+                const ul = document.getElementById('userList');
+
+                if (!data.users || !Array.isArray(data.users) || data.users.length === 0) {
+                    ul.innerHTML = '<li>No users registered yet.</li>';
+                    return;
+                }
+
+                data.users.forEach(username => {
+                    const li = document.createElement('li');
+                    li.textContent = username;
+                    ul.appendChild(li);
+                });
+            })
+            .catch(err => {
+                document.body.innerHTML += `<p>Error loading users: ${err.message}</p>`;
+            });
+    </script>
+</body>
+
+</html>
