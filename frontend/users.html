@@ -1,31 +1,47 @@
+<!-- 
+    Author: Teresa Fares
+    Date: 21 July 2025
+    Purpose: Display a list of registered users fetched from the backend API.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
+    <!-- Responsive viewport for proper scaling on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>User List</title>
+    <!-- Link to external CSS stylesheet -->
     <link rel="stylesheet" href="stylesheet.css" />
 </head>
 
 <body style="display: flex; flex-direction: column; align-items: center;">
+    <!-- Container for the user list section -->
     <div>
+        <!-- Page heading -->
         <h1 style="margin-top: 2rem; color: #333; font-size: 2.5rem;">Registered Users</h1>
+        <!-- Unordered list to hold the usernames fetched from the server -->
         <ul id="userList"></ul>
     </div>
 
     <script>
+        // Fetch the list of users from the /users API endpoint
         fetch('/users')
-            .then(res => res.json())
+            .then(res => res.json())  // Parse the response as JSON
             .then(data => {
-                console.log('Users API response:', data); // Debug log
+                console.log('Users API response:', data); // Debug log to check API response
+
                 const ul = document.getElementById('userList');
 
+                // Check if data.users exists, is an array, and has items
                 if (!data.users || !Array.isArray(data.users) || data.users.length === 0) {
+                    // Show message if no users are registered
                     ul.innerHTML = '<li>No users registered yet.</li>';
                     return;
                 }
 
+                // Loop through each username and add it as a list item
                 data.users.forEach(username => {
                     const li = document.createElement('li');
                     li.textContent = username;
@@ -33,6 +49,7 @@
                 });
             })
             .catch(err => {
+                // Display error message in the body if fetching users fails
                 document.body.innerHTML += `<p>Error loading users: ${err.message}</p>`;
             });
     </script>

@@ -1,51 +1,63 @@
+<!-- 
+    Author: Teresa Fares
+    Date: 21 July 2025
+    Purpose: Login and Registration page with toggleable forms for user authentication.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <!-- Ensures compatibility with IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Responsive viewport for mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login And Registration</title>
+    <!-- Icon library for user and lock icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- External CSS stylesheet -->
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 
 <body>
 
     <div class="container">
+        <!-- Login form container -->
         <div class="form-box login">
             <form action="">
                 <h1>Login</h1>
                 <div class="input-box">
                     <input type="text" placeholder="Username" required>
-                    <i class='bx bxs-user'></i>
+                    <i class='bx bxs-user'></i> <!-- User icon -->
                 </div>
                 <div class="input-box">
                     <input type="password" placeholder="Password" required>
-                    <i class='bx bxs-lock-alt'></i>
+                    <i class='bx bxs-lock-alt'></i> <!-- Lock icon -->
                 </div>
                 <button type="submit" class="btn">Login</button>
-
             </form>
         </div>
 
+        <!-- Registration form container -->
         <div class="form-box register">
             <form id="registerForm">
                 <h1>Registration</h1>
                 <div class="input-box">
                     <input type="text" placeholder="Username" required>
-                    <i class='bx bxs-user'></i>
+                    <i class='bx bxs-user'></i> <!-- User icon -->
                 </div>
                 <div class="input-box">
                     <input type="password" id="regPassword" placeholder="Password" required>
-                    <i class='bx bxs-lock-alt'></i>
+                    <i class='bx bxs-lock-alt'></i> <!-- Lock icon -->
                 </div>
+                <!-- Error message placeholder for registration validation -->
                 <span id="signupError" style="color: red;"></span>
                 <button type="submit" class="btn">Register</button>
             </form>
-
         </div>
 
+        <!-- Toggle panel to switch between login and registration -->
         <div class="toggle-box">
             <div class="toggle-panel toggle-left">
                 <h1>Hello, Welcome!</h1>
@@ -60,7 +72,7 @@
         </div>
     </div>
 
-
+    <!-- External JavaScript to handle form toggling and submissions -->
     <script src="script.js"></script>
 </body>
 

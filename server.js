@@ -1,6 +1,8 @@
-// Author: Your Name
-// Date: 20 July 2025
-// Purpose: Handle login and registration with accounts.txt and JSON responses
+// Author: Teresa Fares
+// Date: 21 July 2025
+// Purpose: Simple Express server to handle user login, registration, 
+//          and retrieval of registered users using a text file (accounts.txt)
+//          to store credentials. Returns JSON responses for frontend consumption.
 
 const express = require('express');
 const fs = require('fs');
@@ -14,7 +16,7 @@ const ACCOUNTS_FILE = path.join(__dirname, 'accounts.txt');
 app.use(express.json());
 app.use(express.static('frontend'));
 
-// Login endpoint
+// Login endpoint: checks username/password against accounts.txt
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -27,7 +29,7 @@ app.post('/login', (req, res) => {
     fs.readFile(ACCOUNTS_FILE, 'utf8', (err, data) => {
         if (err) {
             if (err.code === 'ENOENT') {
-                // No users yet
+                // No accounts.txt file exists yet
                 console.log('No accounts.txt found.');
                 return res.status(401).json({ success: false, message: "Invalid credentials." });
             }
@@ -38,6 +40,7 @@ app.post('/login', (req, res) => {
         const lines = data.split('\n');
         let found = false;
 
+        // Iterate over each line to find matching credentials
         for (let line of lines) {
             const [fileUser, filePass] = line.trim().split(',');
             if (fileUser === username && filePass === password) {
@@ -56,7 +59,7 @@ app.post('/login', (req, res) => {
     });
 });
 
-// Registration endpoint
+// Registration endpoint: validates and appends new user to accounts.txt
 app.post('/register', (req, res) => {
     const { username, password } = req.body;
 
@@ -79,6 +82,7 @@ app.post('/register', (req, res) => {
         const lines = data ? data.split('\n') : [];
         const users = lines.map(line => line.trim().split(',')[0]);
 
+        // Check if username already exists
         if (users.includes(username)) {
             console.log('Registration failed, username taken:', username);
             return res.status(409).json({ success: false, message: "Username already taken." });
@@ -86,6 +90,7 @@ app.post('/register', (req, res) => {
 
         const newLine = `${username},${password}\n`;
 
+        // Append new user credentials to the file
         fs.appendFile(ACCOUNTS_FILE, newLine, (err) => {
             if (err) {
                 console.error('Error saving new account:', err);
@@ -98,26 +103,28 @@ app.post('/register', (req, res) => {
     });
 });
 
-// Endpoint to get all usernames (no passwords)
+// Endpoint to retrieve all registered usernames (no passwords sent)
 app.get('/users', (req, res) => {
     fs.readFile(ACCOUNTS_FILE, 'utf8', (err, data) => {
         if (err) {
             if (err.code === 'ENOENT') {
-                // No accounts yet, return empty users list
+                // No users registered yet, send empty list
                 return res.json({ users: [] });
             }
-            // On any other error, respond with empty users array for frontend safety
+            // Other errors: log and respond with empty users array to avoid frontend errors
             console.error('Error reading accounts file:', err);
             return res.json({ users: [] });
         }
 
+        // Filter out empty lines and extract usernames only
         const lines = data.split('\n').filter(line => line.trim() !== '');
-        const users = lines.map(line => line.split(',')[0]); // Extract usernames only
+        const users = lines.map(line => line.split(',')[0]);
 
         res.json({ users });
     });
 });
 
+// Test endpoint to view raw accounts.txt file contents (for debugging)
 app.get('/testfile', (req, res) => {
     fs.readFile(ACCOUNTS_FILE, 'utf8', (err, data) => {
         if (err) return res.status(500).send('Error reading file');
@@ -125,12 +132,13 @@ app.get('/testfile', (req, res) => {
     });
 });
 
-// Catch-all 404 JSON response
+// Catch-all 404 handler for unknown routes, returns JSON response
 app.use((req, res) => {
     console.log('404 Not Found:', req.originalUrl);
     res.status(404).json({ success: false, message: "Endpoint not found" });
 });
 
+// Start server and listen on configured port
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
