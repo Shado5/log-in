@@ -5,11 +5,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>User List</title>
+    <link rel="stylesheet" href="stylesheet.css" />
 </head>
 
-<body>
-    <h1>Registered Users</h1>
-    <ul id="userList"></ul>
+<body style="display: flex; flex-direction: column; align-items: center;">
+    <div>
+        <h1 style="margin-top: 2rem; color: #333; font-size: 2.5rem;">Registered Users</h1>
+        <ul id="userList"></ul>
+    </div>
 
     <script>
         fetch('/users')

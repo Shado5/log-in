@@ -1,3 +1,9 @@
+/* 
+Author: Teresa Fares
+Date: 21 July 2025
+Purpose: Style for a responsive user registration and login interface with animated transitions and user list layout
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 * {
@@ -202,6 +208,68 @@ form {
     background: transparent;
     border: 2px solid #fff;
     box-shadow: none;
+}
+
+#userList {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+#userList li {
+    background: white;
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    color: #555;
+    transition: transform 0.2s;
+    text-align: center;
+    align-items: center;
+}
+
+#userList li:hover {
+    transform: scale(1.02);
+}
+
+.user-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-container {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+#userList {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-width: 400px;
+}
+
+#userList li {
+    background: white;
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    color: #555;
+    transition: transform 0.2s;
+}
+
+#userList li:hover {
+    transform: scale(1.02);
 }
 
 @media screen and (max-width: 650px) {
