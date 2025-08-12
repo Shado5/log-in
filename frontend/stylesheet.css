@@ -127,20 +127,11 @@ form {
     margin: 15px 0;
 }
 
-.social-icons {
-    display: flex;
-    justify-content: center;
-}
-
-.social-icons a {
-    display: inline-flex;
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    font-size: 24px;
-    color: #333;
-    text-decoration: none;
-    margin: 0 8px;
+#userCount {
+    font-size: 20px;
+    color: #555;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .toggle-box {

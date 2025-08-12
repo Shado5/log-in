@@ -21,6 +21,7 @@
     <div>
         <!-- Page heading -->
         <h1 style="margin-top: 2rem; color: #333; font-size: 2.5rem;">Registered Users</h1>
+        <p id="userCount">Total users = 0</p> <!-- Added counter display -->
         <!-- Unordered list to hold the usernames fetched from the server -->
         <ul id="userList"></ul>
     </div>
@@ -33,11 +34,13 @@
                 console.log('Users API response:', data); // Debug log to check API response
 
                 const ul = document.getElementById('userList');
+                const countEl = document.getElementById('userCount');
 
                 // Check if data.users exists, is an array, and has items
                 if (!data.users || !Array.isArray(data.users) || data.users.length === 0) {
                     // Show message if no users are registered
                     ul.innerHTML = '<li>No users registered yet.</li>';
+                    countEl.textContent = "Total users = 0";
                     return;
                 }
 
@@ -47,6 +50,9 @@
                     li.textContent = username;
                     ul.appendChild(li);
                 });
+
+                // Update the total user count
+                countEl.textContent = `Total users = ${data.users.length}`;
             })
             .catch(err => {
                 // Display error message in the body if fetching users fails
